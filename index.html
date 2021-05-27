@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Openboard - Arindam Keswani</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    
+<div class="combined-menu">
+
+    <div class="toggler">
+        <i class="fas fa-bars fa-2x icon"></i>
+    </div>
+    <div class="toolbar">
+
+        <div class="pencil-container">
+            <div class="tool active" id="pencil">
+                <i class="fas fa-pencil-alt fa-2x icon"></i>
+            </div>
+        </div>
+
+        <div class="tool" id="eraser">
+            <i class="fas fa-eraser fa-2x"></i>
+        </div>
+        <div class="tool" id="note">
+            <i class="fas fa-sticky-note fa-2x"></i>
+        </div>
+        <div class="tool" id="upload">
+            <i class="fas fa-upload fa-2x"></i>
+        </div>
+        <div class="tool" id="download">
+            <i class="fas fa-download fa-2x"></i>
+        </div>
+        <div class="tool" id="undo">
+            <i class="fas fa-undo fa-2x"></i>
+        </div>
+        <div class="tool" id="redo">
+            <i class="fas fa-redo fa-2x"></i>
+        </div>
+        <div class="tool" id="zoom-in">
+            <i class="fas fa-plus fa-2x"></i>
+        </div>
+        <div class="tool" id="zoom-out">
+            <i class="fas fa-minus fa-2x"></i>
+        </div>
+    </div>
+    
+</div>
+<div class="pencil-options">
+    <div class="pencil-size">
+        <input type="range" id="pen-size" min="5" max="30" value="5">
+    </div>
+    <div class="pencil-colour-container">
+        <input type="color" id="color">
+    </div>
+</div>
+
+<div class="eraser-size">
+    <input type="range" id="rubber-size" min="5" max="30" value="5">
+</div>
+
+<canvas id="board"></canvas>
+
+<script src="script.js" defer></script>
+</body>
+</html>
