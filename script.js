@@ -13,11 +13,13 @@ let eraserMeter = document.querySelector("#rubber-size");
 let noteBtn = document.querySelector("#note");
 let mainContainer = document.querySelector(".main-container");
 
-let undoBtn=document.querySelector("#undo");
+let uploadBtn = document.querySelector("#file-upload");
+
+let undoBtn = document.querySelector("#undo");
 let undo_array = [];
 let undo_idx = 0;
 
-let redoBtn=document.querySelector("#redo");
+let redoBtn = document.querySelector("#redo");
 let redo_array = [];
 let redo_idx = -1;
 
@@ -88,12 +90,12 @@ pencilBtn.addEventListener("click", function () {
         // tool.stroke();
         isMouseDown = false;
 
-        if(e){
+        if (e) {
             undo_array.push(tool.getImageData(0, 0, board.height, board.width));
             undo_idx += 2;
         }
         // console.log(undo_array);
-        
+
     })
 
 
@@ -248,63 +250,131 @@ function createNote() {
 
 //undo
 
-undoBtn.addEventListener("click", function(){
+undoBtn.addEventListener("click", function () {
     console.log("Clicked Undo");
     undo();
 })
 
-function undo(){
-    
-    if(undo_array.length<=0){
+function undo() {
+
+    if (undo_array.length <= 0) {
         alert("Canvas is empty");
-    }else{
-        undo_idx -=2;
-        
+    } else {
+        undo_idx -= 2;
+
         redo_array.push(undo_array.pop());
         redo_array.push(undo_array.pop());
         tool.clearRect(0, 0, board.width, board.height);
-        
-        
+
+
         // undo_array.pop()
         // console.log(undo_array);
-        for(let i =0;i<undo_array.length;i+=2){ //putting it in loop fixed "Not Image type error"
-            tool.putImageData(undo_array[i],0,0);
+        for (let i = 0; i < undo_array.length; i += 2) { //putting it in loop fixed "Not Image type error"
+            tool.putImageData(undo_array[i], 0, 0);
         }
-        
+
     }
 }
 
 
-redoBtn.addEventListener("click", function(){
+redoBtn.addEventListener("click", function () {
     console.log("Clicked redo");
     redo();
 })
 
-function redo(){
-    
-    if(redo_array.length<=0){
+function redo() {
+
+    if (redo_array.length <= 0) {
         alert("Reached final stroke.");
-    }else{
+    } else {
         // redo_idx -=2;
-        
-        
-        
+
+
+
         tool.clearRect(0, 0, board.width, board.height);
         console.log(redo_array);
-        for(let i =0;i<1;i+=1){ //putting it in loop fixed "Not Image type error"
+        for (let i = 0; i < 1; i += 1) { //putting it in loop fixed "Not Image type error"
             // tool.putImageData(redo_array.pop(),0,0);
-            
+
             undo_array.push(redo_array.pop());
             undo_array.push(redo_array.pop());
-            
-            for(let i =0;i<undo_array.length;i+=1){ //putting it in loop fixed "Not Image type error"
-                tool.putImageData(undo_array[i],0,0);
+
+            for (let i = 0; i < undo_array.length; i += 1) { //putting it in loop fixed "Not Image type error"
+                tool.putImageData(undo_array[i], 0, 0);
             }
         }
-        
+
     }
 }
 
+let imgCount = 0;
+uploadBtn.addEventListener("change", function () {
+    if (this.files && this.files[0]) {
+        // console.log("Clicked upload button");
+        // console.log(uploadBtn.value);
+        // console.log(this.files[0]);
+
+
+        let imgContainer = document.createElement("div");
+
+        imgContainer.setAttribute("class", "img-note");
+        imgContainer.innerHTML = `<div class="nav">
+                                        <div class="minimize"></div>
+                                        <div class="close"></div>
+                                    </div>
+                                    <div class="image">
+                                        <img id="image${imgCount + 1}" src=" " width="100%" height="100%"/>   
+                                    </div>`
+        // <textarea></textarea>
+        imgCount += 1;
+        mainContainer.appendChild(imgContainer);
+
+        img = document.querySelector(`#image${imgCount}`);
+        // console.log(img);
+        img.src = URL.createObjectURL(this.files[0]);
+        //IMAGE UPLOADED----------------------------------------
+        
+        let noteNav = imgContainer.childNodes[0];
+        // console.log(noteNav.childNodes);
+        // // console.log(noteNav.childNodes[3]);
+        noteNav.onmousedown = function () {
+            dragValue = imgContainer;
+        }
+        document.onmouseup = function (e) {
+            dragValue = null;
+        }
+        document.onmousemove = function (e) {
+            if (dragValue != null) {
+                var x = e.pageX;
+                var y = e.pageY;
+
+                dragValue.style.left = x + "px";
+                dragValue.style.top = y + "px";
+            }
+
+        }
+
+        let mini = noteNav.childNodes[1];
+        let close = noteNav.childNodes[3];
+        // let pad = taskContainer.childNodes[3];
+
+        mini.addEventListener("click", function () {
+            if (img.style.display != "none") {
+                img.style.display = "none";
+            } else {
+                img.style.display = "block";
+            }
+
+        })
+
+        close.addEventListener("click", function () {
+            imgContainer.remove();
+            imgContainer-=1;
+        })
+
+    }
+
+})
 
 function getCoordinates(initialY) {
     let obj = menu.getBoundingClientRect();

@@ -4,7 +4,7 @@
 }
 .combined-menu{
     position: relative;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -17,7 +17,7 @@
 }
 .toggler{
     position: relative;
-    width:10%;
+    width:5%;
     padding-right:0vw;
     /* border: 1px solid red; */
     display:flex;
@@ -82,6 +82,7 @@ input#pen-size{
     width: 10vh;
 }
 
+
 .eraser-size{
     position:fixed;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
@@ -92,6 +93,34 @@ input#pen-size{
     z-index:-1;  
 }
 
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    /* border: 1px solid #ccc; */
+    display: inline-block;
+    /* padding: 6px 12px; */
+    cursor: pointer;
+}
+
+.img-note{
+    width: 20vw;
+    height: 30vh;
+    z-index:1;
+    position:absolute;
+}
+.image{
+    height: 80%;
+    width:100%;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* border: 1px solid black; */
+}
 .sticky-note{
     width: 20vw;
     height: 30vh;
