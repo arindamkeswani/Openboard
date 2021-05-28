@@ -7,10 +7,11 @@ let colorBtn = document.querySelector("#color");
 let rangeMeter = document.querySelector("input#pen-size");
 
 let eraserBtn = document.querySelector("#eraser");
-let eraserMeter = document.querySelector(".eraser-size");
+let eraserMeterCont = document.querySelector(".eraser-size");
+let eraserMeter = document.querySelector("#rubber-size");
 
-let note = document.querySelector(".note");
-
+let noteBtn = document.querySelector("#note");
+let mainContainer = document.querySelector(".main-container");
 board.height = window.innerHeight;
 board.width = window.innerWidth;
 
@@ -111,11 +112,11 @@ eraserBtn.addEventListener("click", function () {
 
     eraserOptActive = !eraserOptActive;
     if(eraserOptActive){
-        eraserMeter.style.opacity = "1";
-        eraserMeter.style.zIndex = "3";
+        eraserMeterCont.style.opacity = "1";
+        eraserMeterCont.style.zIndex = "3";
     }else{
-        eraserMeter.style.opacity = "0";
-        eraserMeter.style.zIndex = "-1";
+        eraserMeterCont.style.opacity = "0";
+        eraserMeterCont.style.zIndex = "-1";
     }
 
     tool.strokeStyle = eraserColor;
@@ -157,28 +158,74 @@ eraserBtn.addEventListener("click", function () {
 
 eraserMeter.addEventListener("click", function(){
     
-    eraserSize=rangeMeter.value;
+    eraserSize=eraserMeter.value;
+    console.log(eraserSize);
     tool.lineWidth=eraserSize;
+    console.log(tool.lineWidth);
     
 })
 
 //sticky notes
-
-function createTask(color,task, x, flag,id){
+noteBtn.addEventListener("click", function(){
+    createNote()
+})
+function createNote(){
     // console.log(x);
     let taskContainer=document.createElement("div");
 
-    let uifn = new ShortUniqueId();
-    let uid = id || uifn();
-    taskContainer.setAttribute("class", "task_container");
-    taskContainer.innerHTML = `<div class="task_filter ${color} <style>background-color:${x}</style>"></div>
-                                    <div class="task_desc_container">
-                                        <h3 class="uid">#${uid}</h3>
-                                        <div class="task_desc" contenteditable="true">${task}</div>
+    taskContainer.setAttribute("class", "sticky-note");
+    taskContainer.innerHTML = `     <div class="nav">
+                                        <div class="minimize"></div>
+                                        <div class="close"></div>
                                     </div>
-                                </div >`;
+                                    <div class="writing-pad" contenteditable="true">
+                                        
+                                    </div>`;
+                                // <textarea></textarea>
     mainContainer.appendChild(taskContainer);
+
+    
+    taskContainer.style.position = "absolute";
+
+    let noteNav=taskContainer.childNodes[1];
+    // console.log(noteNav.childNodes[3]);
+    noteNav.onmousedown = function(){
+        dragValue = taskContainer;
+    }
+    document.onmouseup = function(e){
+        dragValue=null;
+    }
+    document.onmousemove = function(e){
+        if(dragValue!=null){
+            var x= e.pageX;
+            var y= e.pageY;
+    
+            dragValue.style.left = x+"px";
+            dragValue.style.top = y+"px";
+        }
+        
+    }
+    
+    let mini = noteNav.childNodes[1];
+    let close = noteNav.childNodes[3];
+    let pad = taskContainer.childNodes[3];
+
+    mini.addEventListener("click", function(){
+        if(pad.style.display != "none"){
+            pad.style.display = "none";
+        }else{
+            pad.style.display = "block";
+        }
+        
+    })
+    
+    close.addEventListener("click",function(){
+        taskContainer.remove();
+    })
 }
+
+
+
 
 function getCoordinates(initialY) {
     let obj = menu.getBoundingClientRect();
