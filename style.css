@@ -1,7 +1,9 @@
 *{
     box-sizing: border-box;
-    /* overflow: hidden; */
+    /* overflow-y:hidden; */
 }
+
+
 .combined-menu{
     position: relative;
     /* border: 1px solid black; */
@@ -13,8 +15,8 @@
     margin-left:15%;
     z-index:3;
     
-    
 }
+
 .toggler{
     position: relative;
     width:5%;
@@ -175,5 +177,11 @@ input[type="file"] {
 }
 #board{
     overflow:hidden;
+    /* height:600px;
+    width:2000px; */
+    /* position:absolute;
+    margin-top: 0vh; */
+    /* scroll-behavior: ; */
     /* margin-top: 25vh; */
+    
 }

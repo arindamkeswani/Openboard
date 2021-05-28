@@ -24,13 +24,13 @@ let redo_array = [];
 let redo_idx = -1;
 
 
-board.height = window.innerHeight;
-board.width = window.innerWidth;
+board.height = window.innerHeight-toolbar.getBoundingClientRect().height-60;
+board.width = window.innerWidth-60;
 
-// console.log(toolbar.getBoundingClientRect().height);
+console.log(toolbar.getBoundingClientRect().height);
 window.addEventListener("resize", function () {
-    board.height = window.innerHeight;
-    board.width = window.innerWidth;
+    board.height = window.innerHeight-toolbar.getBoundingClientRect().height;
+    board.width = window.innerHeight-toolbar.getBoundingClientRect().width;
     // draw(); //called repeatedly in resizing window
 })
 
@@ -68,6 +68,8 @@ pencilBtn.addEventListener("click", function () {
         tool.beginPath();
         tool.moveTo(x, y);
         isMouseDown = true;
+
+        
     })
     board.addEventListener("mousemove", function (e) {
         x = e.clientX;
@@ -79,7 +81,11 @@ pencilBtn.addEventListener("click", function () {
             tool.lineTo(x, y);
             tool.stroke();
         }
-
+        if (e) {
+            undo_array.push(tool.getImageData(0, 0, board.height, board.width));
+            undo_idx += 2;
+        }
+        
     })
     board.addEventListener("mouseup", function (e) {
         // console.log("Up");
@@ -161,7 +167,8 @@ eraserBtn.addEventListener("click", function () {
             tool.lineTo(x, y);
             tool.stroke();
         }
-
+        undo_array.push(tool.getImageData(0, 0, board.width, board.height));
+        
     })
     board.addEventListener("mouseup", function (e) {
         // console.log("Up");
@@ -262,14 +269,16 @@ function undo() {
     } else {
         undo_idx -= 2;
 
-        redo_array.push(undo_array.pop());
-        redo_array.push(undo_array.pop());
+        for(let i=0;i<6;i++){
+            redo_array.push(undo_array.pop());
+        }
+        
         tool.clearRect(0, 0, board.width, board.height);
 
 
         // undo_array.pop()
         // console.log(undo_array);
-        for (let i = 0; i < undo_array.length; i += 2) { //putting it in loop fixed "Not Image type error"
+        for (let i = 0; i < undo_array.length; i += 6) { //putting it in loop fixed "Not Image type error"
             tool.putImageData(undo_array[i], 0, 0);
         }
 
