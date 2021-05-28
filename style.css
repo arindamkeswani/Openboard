@@ -11,6 +11,7 @@
     height:20vh;
     width:60%;
     margin-left:15%;
+    z-index:3;
     
     
 }
@@ -33,7 +34,7 @@
     justify-content:space-between;
     align-items:center;
     /* border: 1px solid red; */
-    z-index: 1;
+    /* z-index: 1; */
     /* overflow: hidden; */
     padding-right: 3vw;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
@@ -145,5 +146,5 @@ input#pen-size{
 }
 #board{
     overflow:hidden;
-    bottom: 0px;
+    /* margin-top: 25vh; */
 }
