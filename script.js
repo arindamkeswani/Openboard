@@ -18,20 +18,23 @@ let downloadBtn = document.querySelector("#download");
 
 let undoBtn = document.querySelector("#undo");
 let undo_array = [];
-let undo_idx = 0;
+
 
 let redoBtn = document.querySelector("#redo");
 let redo_array = [];
-let redo_idx = -1;
 
+let screenshotBtn = document.querySelector("#screenshot");
 
+let togglerBtn = document.querySelector(".toggler")
+
+let clearBtn = document.querySelector("#clearscreen");
 
 board.height = window.innerHeight - toolbar.getBoundingClientRect().height - 60;
 board.width = window.innerWidth - 60;
 // board.height = window.innerHeight;
 // board.width = window.innerWidth;
 
-console.log(toolbar.getBoundingClientRect().height);
+// console.log(toolbar.getBoundingClientRect().height);
 // window.addEventListener("resize", function () {
 //     // board.height = window.innerHeight;
 //     // board.width = window.innerWidth;
@@ -436,6 +439,27 @@ downloadBtn.addEventListener("click", function () {
     anchor.download = "file.png";
     anchor.click();
     anchor.remove();
+})
+
+screenshotBtn.addEventListener("click", function(){
+    print();
+})
+
+clearBtn.addEventListener("click",function(){
+    tool.clearRect(0, 0, board.width, board.height);
+    undo_array=[];
+    redo_array=[];
+})
+
+isToolbarHidden=false;
+togglerBtn.addEventListener("click",function(){
+    if(isToolbarHidden){
+        toolbar.style.display="flex";
+        isToolbarHidden=false;
+    }else{
+        toolbar.style.display="none";
+        isToolbarHidden=true;
+    }
 })
 function getCoordinates(initialY) {
     let obj = menu.getBoundingClientRect();
