@@ -20,7 +20,7 @@ function validate(){
         if(credentials[i].user == username){
             if(credentials[i].password == password){
                 // alert("Logged in successfully");
-                submitLink.href = "whiteboard.html";
+                submitLink.href = "home.html";
                 valid=true;
                 break;
             }
