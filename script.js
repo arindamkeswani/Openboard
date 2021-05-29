@@ -116,6 +116,7 @@ board.addEventListener("mousemove", function (e) {
         };
 
         undo_array.push(point);
+        console.log("Input");
     }
     // if (e) {
     //     undo_array.push(tool.getImageData(0, 0, board.height, board.width));
@@ -178,7 +179,7 @@ eraserBtn.addEventListener("click", function () {
 
     tool.strokeStyle = eraserColor;
     tool.lineWidth = eraserSize;
-    let isMouseDown = false;
+    // let isMouseDown = false;
     // board.addEventListener("mousedown", function (e) {
     //     // console.log("Down");
     //     x = e.clientX;
@@ -312,30 +313,6 @@ function undo() {
 }
 
 
-// function undo() {
-
-//     if (undo_array.length <= 0) {
-//         alert("Canvas is empty");
-//     } else {
-//         undo_idx -= 2;
-
-//         for(let i=0;i<1;i++){
-//             redo_array.push(undo_array.pop());
-//         }
-
-//         tool.clearRect(0, 0, board.width, board.height);
-
-
-//         // undo_array.pop()
-//         // console.log(undo_array);
-//         for (let i = 0; i < undo_array.length; i += 1) { //putting it in loop fixed "Not Image type error"
-//             tool.putImageData(undo_array[i], 0, 0);
-//         }
-
-//     }
-// }
-
-
 redoBtn.addEventListener("mousedown", function () {
     console.log("Clicked redo");
     redo();
@@ -355,41 +332,12 @@ function redo() {
 
 
 }
-// function redo() {
-
-//     if (redo_array.length <= 0) {
-//         alert("Reached final stroke.");
-//         for (let i = 0; i < undo_array.length; i += 1) {
-//             tool.putImageData(undo_array[i], 0, 0);
-//         }
-//     } else {
-//         // redo_idx -=2;
-
-
-//         undo_array.push(redo_array.pop());
-//         tool.clearRect(0, 0, board.width, board.height);
-//         console.log(redo_array.length);
-//         // console.log(undo_array.length);
-//         for (let i = 0; i < 1; i += 1) { //putting it in loop fixed "Not Image type error"
-//             // tool.putImageData(redo_array.pop(),0,0);
-
-
-
-
-
-//             for (let i = 0; i < undo_array.length; i += 1) { //putting it in loop fixed "Not Image type error"
-//                 tool.putImageData(undo_array[i], 0, 0);
-//             }
-//         }
-
-//     }
-// }
 
 
 function redraw_canvas() {
     tool.clearRect(0, 0, board.width, board.height);
 
-    for (let i = 0; i < undo_array.length; i += 2) {
+    for (let i = 0; i < undo_array.length; i += 1) {
         let { x, y, identifier, color, width } = undo_array[i];
         // console.log(x, y, identifier);
         tool.strokeStyle = color;
@@ -475,11 +423,12 @@ uploadBtn.addEventListener("change", function () {
 })
 
 downloadBtn.addEventListener("click", function () {
-    // console.log("Download area");
-    let canvas = document.createElement("canvas");
-    canvas.width = board.width;
-    canvas.height = board.height;
-
+    console.log("Download area");
+    let canvas = document.querySelector("#board");
+    // canvas.width = board.width;
+    // canvas.height = board.height;
+    // let tool = canvas.getContext("2d");
+    
     let link = canvas.toDataURL();
     // download 
     let anchor = document.createElement("a");
