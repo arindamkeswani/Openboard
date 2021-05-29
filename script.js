@@ -29,6 +29,9 @@ let togglerBtn = document.querySelector(".toggler")
 
 let clearBtn = document.querySelector("#clearscreen");
 
+let zoomInBtn = document.querySelector("#zoom-in");
+let zoomOutBtn = document.querySelector("#zoom-out");
+
 board.height = window.innerHeight - toolbar.getBoundingClientRect().height - 60;
 board.width = window.innerWidth - 60;
 // board.height = window.innerHeight;
@@ -445,6 +448,32 @@ screenshotBtn.addEventListener("click", function(){
     print();
 })
 
+//Zoom in/out
+let zoomLevel = 1; //degree of zoom
+zoomInBtn.addEventListener("click",function(e){
+    zoomLevel += 0.1;
+    if(zoomLevel<3){
+        zoomLevel*=1.1;
+        board.style.transform= `scale(${zoomLevel})`;
+        board.height = window.innerHeight - toolbar.getBoundingClientRect().height - 60;
+        board.width = window.innerWidth - 60;
+    }
+    // tool.scale(zoomLevel,zoomLevel);
+    // tool.translate(0,+70);
+    redraw_canvas();
+})
+zoomOutBtn.addEventListener("click",function(){
+    // zoomLevel -= 0.1;
+    if(zoomLevel>0.5){
+        zoomLevel*=0.90;
+        board.style.transform= `scale(${zoomLevel})`;
+        board.height = window.innerHeight - toolbar.getBoundingClientRect().height - 60;
+        board.width = window.innerWidth - 60;
+    }
+    // tool.scale(zoomLevel,zoomLevel);
+    // tool.translate(0,-50);
+    redraw_canvas();
+})
 clearBtn.addEventListener("click",function(){
     tool.clearRect(0, 0, board.width, board.height);
     undo_array=[];
