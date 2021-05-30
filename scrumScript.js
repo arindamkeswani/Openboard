@@ -5,7 +5,8 @@ let progressBarValueElem = document.querySelector(".progress-bar-value");
 let clearScreenBtn = document.querySelector(".clear-btn-container");
 let printScreenBtn = document.querySelector(".screenshot-btn-container");
 let summaryBtn = document.querySelector(".summary-btn-container");
-
+let togglerBtn = document.querySelector(".toggler");
+let toolbar = document.querySelector(".option-menu");
 let summaryObj = [];
 
 noteBtn.addEventListener("click", function () {
@@ -17,6 +18,18 @@ numNotes = 0;
 doneNotes = 0;
 numNotes = 0;
 let progress = 0;
+
+isToolbarHidden=false;
+togglerBtn.addEventListener("click",function(){
+    if(isToolbarHidden){
+        toolbar.style.display="flex";
+        isToolbarHidden=false;
+    }else{
+        toolbar.style.display="none";
+        isToolbarHidden=true;
+    }
+})
+
 function createNote() {
     let taskContainer = document.createElement("div");
 
@@ -141,7 +154,8 @@ function createNote() {
         }
 
     })
-
+    
+    let noteId = taskContainer.childNodes[1].id
     close.addEventListener("click", function () {
         if (checkBtn.style.backgroundColor == "black") {//it is done
             doneNotes -= 1;
@@ -149,16 +163,16 @@ function createNote() {
         numNotes -= 1;
         taskContainer.remove();
 
-        if(doneNotes!=0 || numNotes!=0){
-            progress = (doneNotes / numNotes) * 100;
-            progressBarValueElem.innerText = progress + "%";
-            progressBarValueElem.style.width = progress + "%";
-        }else{
+        if (doneNotes == 0 && numNotes == 0) {
             progress = 0;
             progressBarValueElem.innerText = progress + "%";
             progressBarValueElem.style.width = progress + "%";
+        } else {
+            progress = (doneNotes / numNotes) * 100;
+            progressBarValueElem.innerText = progress + "%";
+            progressBarValueElem.style.width = progress + "%";
         }
-        
+
     })
 
     let redChange = noteNav.childNodes[1];
@@ -186,9 +200,16 @@ function createNote() {
 
 summaryBtn.addEventListener("click", function () {
     summaryObj = [];
-    progress = (doneNotes / numNotes) * 100;
-    progressBarValueElem.innerText = progress + "%";
-    progressBarValueElem.style.width = progress + "%";
+    if (doneNotes == 0 && numNotes == 0) {
+        progress = 0;
+        progressBarValueElem.innerText = progress + "%";
+        progressBarValueElem.style.width = progress + "%";
+    } else {
+        progress = (doneNotes / numNotes) * 100;
+        progressBarValueElem.innerText = progress + "%";
+        progressBarValueElem.style.width = progress + "%";
+    }
+
 
     summaryObj.push(progress);
 
@@ -199,11 +220,16 @@ summaryBtn.addEventListener("click", function () {
         // console.log(notesArr[0].childNodes[3].textContent);//gets text inside writing pad
         // console.log(notesArr[0].childNodes[1].childNodes[9].style.backgroundColor); //gets checked background colour to check if done or not
         // console.log(notesArr[0].childNodes[1].style.backgroundColor); //gives background colour of note, for priority
+        // let noteId=-1;
         let done = "";
         let priority = "";
         let textVal = "";
+        
+        noteId = i;
+        
+        // id = 
 
-        textVal = notesArr[i].childNodes[3].textContent;
+        textVal = notesArr[i].childNodes[3].innerText;
 
         if (notesArr[i].childNodes[1].childNodes[9].style.backgroundColor == "black") {
             done = "Yes";
@@ -226,7 +252,7 @@ summaryBtn.addEventListener("click", function () {
 
         //push everything into array
         summaryObj.push(
-            {
+            {   taskID : noteId,
                 content: textVal,
                 priority: priority,
                 done: done
@@ -252,4 +278,13 @@ printScreenBtn.addEventListener("click", function () {
         anchor.remove();
         // window.location.href = base64image;
     });
+})
+
+clearScreenBtn.addEventListener("click", function(){
+    let notesArr = document.querySelectorAll(".sticky-note");
+    
+    for(let i=0;i<notesArr.length;i++){
+        notesArr[i].remove();
+    }
+    summaryObj = [];
 })
