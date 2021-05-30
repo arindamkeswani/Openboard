@@ -231,7 +231,9 @@ summaryBtn.addEventListener("click", function () {
 
         textVal = notesArr[i].childNodes[3].innerText;
         // console.log(notesArr[i].childNodes[1].childNodes[9]);
-        if (notesArr[i].childNodes[1].childNodes[9].style.backgroundColor == "black") {
+        setTimeout(function(){ console.log(); }, 2000);
+        let noteBG = notesArr[i].childNodes[1].childNodes[9].style.backgroundColor;
+        if (noteBG == "black") {
             done = "Yes";
         } else {
             done = "No";

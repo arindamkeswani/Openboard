@@ -3,7 +3,7 @@ let list = document.querySelector(".list");
 let progressContainer = document.querySelector(".progress-container");
 let screenshotBtn = document.querySelector("#screenshot");
 let txtBtn = document.querySelector("#txt");
-
+let emailBtn = document.querySelector("#email");
 
 refreshBtn.addEventListener("click", function () {
     var x = JSON.parse(localStorage.getItem("scrumLocalStorage"));
@@ -88,10 +88,27 @@ screenshotBtn.addEventListener("click", function () {
 
     html2canvas(screenshotTarget).then((canvas) => {
         // body.appendChild(canvas);
+        const currentDate = new Date();
+
+        const currentDayOfMonth = currentDate.getDate();
+        const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+        const currentYear = currentDate.getFullYear();
+
+        const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+
+        var hours = currentDate.getHours();
+        // Minutes part from the timestamp
+        var minutes = "0" + currentDate.getMinutes();
+        // Seconds part from the timestamp
+        var seconds = "0" + currentDate.getSeconds();
+
+        // Will display time in 10:30:23 format
+        var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
         const base64image = canvas.toDataURL("image/png");
         let anchor = document.createElement("a");
         anchor.href = base64image;
-        anchor.download = "Summary.png";
+        anchor.download = `Summary Screenshot ${dateString} ${formattedTime}.png`;
         anchor.click();
         anchor.remove();
         // window.location.href = base64image;
@@ -100,46 +117,11 @@ screenshotBtn.addEventListener("click", function () {
 
 txtBtn.addEventListener("click", function () {
 
-    const currentDate = new Date();
-
-    const currentDayOfMonth = currentDate.getDate();
-    const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
-    const currentYear = currentDate.getFullYear();
-
-    const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
-
-    var hours = currentDate.getHours();
-    // Minutes part from the timestamp
-    var minutes = "0" + currentDate.getMinutes();
-    // Seconds part from the timestamp
-    var seconds = "0" + currentDate.getSeconds();
-
-    // Will display time in 10:30:23 format
-    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-
-    console.log(formattedTime);
-    // const currentDate = new Date();
-    // const timestamp = currentDate.getTime(); //full time stamp
-
-    let body = "Date: " + dateString + "\n\nTime: " + formattedTime+"\n\n";
-
     var x = JSON.parse(localStorage.getItem("scrumLocalStorage"));
-    body += "Progress: " + progressContainer.innerText + "\n\n";
-
-    for (let i = 1; i < x.length; i++) {
-        body += "Task ID: " + x[i].taskID + "\n";
-        body += "Task: " + x[i].content + "\n";
-        body += "Priority: " + x[i].priority + "\n";
-        body += "Work finished: " + x[i].done + "\n";
-        body += "_____" + "\n";
-    }
-
-
-
-
+    let { body, dateString, formattedTime } = createSummary(x);
 
     const textToBLOB = new Blob([body], { type: 'text/plain' });
-    const sFileName = `Summary ${dateString} ${formattedTime}.txt`;	   // The file to save the data.
+    const sFileName = `Summary Text ${dateString} ${formattedTime}.txt`;	   // The file to save the data.
 
     let newLink = document.createElement("a");
     newLink.download = sFileName;
@@ -157,3 +139,44 @@ txtBtn.addEventListener("click", function () {
     newLink.remove();
 
 })
+
+
+
+
+function createSummary(x) {
+    const currentDate = new Date();
+
+    const currentDayOfMonth = currentDate.getDate();
+    const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+    const currentYear = currentDate.getFullYear();
+
+    const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+
+    var hours = currentDate.getHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + currentDate.getMinutes();
+    // Seconds part from the timestamp
+    var seconds = "0" + currentDate.getSeconds();
+
+    // Will display time in 10:30:23 format
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    // console.log(formattedTime);
+    // const currentDate = new Date();
+    // const timestamp = currentDate.getTime(); //full time stamp
+
+    let body = "Date: " + dateString + "\n\nTime: " + formattedTime + "\n\n";
+
+
+    body += "Progress: " + progressContainer.innerText + "\n\n";
+
+    for (let i = 1; i < x.length; i++) {
+        body += "Task ID: " + x[i].taskID + "\n";
+        body += "Task: " + x[i].content + "\n";
+        body += "Priority: " + x[i].priority + "\n";
+        body += "Work finished: " + x[i].done + "\n";
+        body += "_____" + "\n";
+    }
+
+    return { body, dateString, formattedTime };
+}
