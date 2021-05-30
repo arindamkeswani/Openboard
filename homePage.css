@@ -34,7 +34,7 @@ body{
     align-items: center;
 }
 
-#whiteboard, #scrum, #timetable, #summary {
+#whiteboard, #scrum, #dictophone, #summary {
     border:0;
     background: none;
     display:block;
@@ -55,7 +55,7 @@ body{
 
 
 
-#whiteboard:hover, #scrum:hover, #timetable:hover, #summary:hover{
+#whiteboard:hover, #scrum:hover, #dictophone:hover, #summary:hover{
     background-color: whitesmoke;
     color:black;
 }

@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    
+    overflow: hidden;
 }
 
 body{
@@ -122,6 +122,45 @@ body{
 #logout:hover{
     background-color: whitesmoke;
     color:black;
+}
+
+.record-btn{
+    width:80%;
+    height:12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-microphone{
+    height:70%;
+    width:5%;
+    padding-top:2vh;
+    padding-left:1.25vw;
+    margin-left: 17vw;
+    color:black;
+    display: flex;
+    /* margin-left: 47vw; */
+    /* margin-top: vh; */
+    border-radius: 1.5rem;
+    border: 2px solid black;
+}
+.fa-microphone:hover{
+    background-color: black;
+    color:whitesmoke;
+}
+
+textarea{
+    width:90%;
+    height:80%;
+    border:3px solid whitesmoke;
+    background: #00000000;
+    font-family: 'Poppins', sans-serif;
+    color: whitesmoke;
+    font-weight: 300;
+    font-size: 2.5rem;
+    padding: 2vw;
+    overflow-y: auto;
 }
 
 article{
