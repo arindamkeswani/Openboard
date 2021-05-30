@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiteboard - Arindam Keswani</title>
+    <title>Whiteboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -72,12 +72,14 @@
 <div class="eraser-size">
     <input type="range" id="rubber-size" min="5" max="30" value="5">
 </div>
-
-<div class="main-container">
-    
+<div class="full-board">
+    <div class="main-container">
+        
+    </div>
+    <canvas id="board"></canvas>
 </div>
-<canvas id="board"></canvas>
 
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" defer></script>
 <script src="WhiteBoardScript.js" defer></script>
 </body>
 </html>

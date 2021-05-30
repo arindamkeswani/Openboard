@@ -421,7 +421,7 @@ uploadBtn.addEventListener("change", function () {
 
         close.addEventListener("click", function () {
             imgContainer.remove();
-            imgContainer -= 1;
+            imgCount -= 1;
         })
 
     }
@@ -445,7 +445,18 @@ downloadBtn.addEventListener("click", function () {
 })
 
 screenshotBtn.addEventListener("click", function(){
-    print();
+    const screenshotTarget = document.querySelector(".full-board");
+
+    html2canvas(screenshotTarget).then((canvas) => {
+        // body.appendChild(canvas);
+        const base64image = canvas.toDataURL("image/png");
+        let anchor = document.createElement("a");
+        anchor.href = base64image;
+        anchor.download = "file.png";
+        anchor.click();
+        anchor.remove();
+        // window.location.href = base64image;
+    });
 })
 
 //Zoom in/out

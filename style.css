@@ -135,7 +135,7 @@ input[type="file"] {
 .sticky-note{
     width: 20vw;
     height: 30vh;
-    z-index:1;
+    z-index:0;
 }
 
 .nav{
@@ -152,6 +152,7 @@ input[type="file"] {
     align-items: center;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
     margin-bottom: 1vh;
+    border: 1px solid black;
 }
 .writing-pad{
     height: 80%;
@@ -162,8 +163,10 @@ input[type="file"] {
     padding:0.5em;
     overflow-y: auto;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
-    border-radius: 10%;
-    border:none;
+    border-bottom-right-radius:30%;
+    border-bottom-left-radius:30%;
+    border: 1px solid black;
+    /* border:none; */
 }
 .writing-pad:focus{
     outline-width: 0px;
@@ -184,8 +187,12 @@ input[type="file"] {
     background-color: rgb(196, 33, 33);
     margin-right: 2vw;
 }
+
+.image{
+    border: 1px solid black;
+}
 #board{
-    overflow:hidden;
+    /* overflow:hidden; */
     /* height:600px;
     width:2000px; */
     /* position:absolute;

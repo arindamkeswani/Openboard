@@ -2,6 +2,8 @@ let noteBtn = document.querySelector(".note-btn-container");
 let mainContainer = document.querySelector(".main-container");
 let body = document.querySelector("body");
 let progressBarValueElem = document.querySelector(".progress-bar-value");
+let clearScreenBtn = document.querySelector(".clear-btn-container");
+let printScreenBtn = document.querySelector(".screenshot-btn-container");
 let summaryBtn = document.querySelector(".summary-btn-container");
 
 let summaryObj = [];
@@ -146,9 +148,17 @@ function createNote() {
         }
         numNotes -= 1;
         taskContainer.remove();
-        progress = (doneNotes / numNotes) * 100;
-        progressBarValueElem.innerText = progress + "%";
-        progressBarValueElem.style.width = progress + "%";
+
+        if(doneNotes!=0 || numNotes!=0){
+            progress = (doneNotes / numNotes) * 100;
+            progressBarValueElem.innerText = progress + "%";
+            progressBarValueElem.style.width = progress + "%";
+        }else{
+            progress = 0;
+            progressBarValueElem.innerText = progress + "%";
+            progressBarValueElem.style.width = progress + "%";
+        }
+        
     })
 
     let redChange = noteNav.childNodes[1];
@@ -226,4 +236,20 @@ summaryBtn.addEventListener("click", function () {
 
 
     console.log(summaryObj);
+})
+
+printScreenBtn.addEventListener("click", function () {
+    // print();
+    const screenshotTarget = document.querySelector(".full-board");
+
+    html2canvas(screenshotTarget).then((canvas) => {
+        // body.appendChild(canvas);
+        const base64image = canvas.toDataURL("image/png");
+        let anchor = document.createElement("a");
+        anchor.href = base64image;
+        anchor.download = "file.png";
+        anchor.click();
+        anchor.remove();
+        // window.location.href = base64image;
+    });
 })
