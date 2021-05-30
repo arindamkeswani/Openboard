@@ -119,7 +119,7 @@ function createNote() {
             doneNotes -= 1;
             checkBtn.style.backgroundColor = "white";
             checkBtn.style.color = "black";
-            progress = (doneNotes / numNotes) * 100;
+            progress = Math.round((doneNotes / numNotes) * 100);
             // console.log(doneNotes);
             // console.log(numNotes);
             // console.log(progress);
@@ -129,7 +129,7 @@ function createNote() {
             doneNotes += 1;
             checkBtn.style.backgroundColor = "black";
             checkBtn.style.color = "white";
-            progress = (doneNotes / numNotes) * 100;
+            progress = Math.round((doneNotes / numNotes) * 100);
             // console.log(doneNotes);
             // console.log(numNotes);
             // console.log(progress);
@@ -168,7 +168,7 @@ function createNote() {
             progressBarValueElem.innerText = progress + "%";
             progressBarValueElem.style.width = progress + "%";
         } else {
-            progress = (doneNotes / numNotes) * 100;
+            progress = Math.round((doneNotes / numNotes) * 100);
             progressBarValueElem.innerText = progress + "%";
             progressBarValueElem.style.width = progress + "%";
         }
@@ -205,7 +205,7 @@ summaryBtn.addEventListener("click", function () {
         progressBarValueElem.innerText = progress + "%";
         progressBarValueElem.style.width = progress + "%";
     } else {
-        progress = (doneNotes / numNotes) * 100;
+        progress = Math.round((doneNotes / numNotes) * 100);
         progressBarValueElem.innerText = progress + "%";
         progressBarValueElem.style.width = progress + "%";
     }
@@ -230,7 +230,7 @@ summaryBtn.addEventListener("click", function () {
         // id = 
 
         textVal = notesArr[i].childNodes[3].innerText;
-
+        // console.log(notesArr[i].childNodes[1].childNodes[9]);
         if (notesArr[i].childNodes[1].childNodes[9].style.backgroundColor == "black") {
             done = "Yes";
         } else {
@@ -260,10 +260,10 @@ summaryBtn.addEventListener("click", function () {
         )
     }
 
-    
+    console.log(summaryObj);
     localStorage.setItem("scrumLocalStorage", JSON.stringify(summaryObj));
     
-    console.log(summaryObj);
+    
 })
 
 printScreenBtn.addEventListener("click", function () {
@@ -289,4 +289,8 @@ clearScreenBtn.addEventListener("click", function(){
         notesArr[i].remove();
     }
     summaryObj = [];
+
+    progress = 0;
+    progressBarValueElem.innerText = progress + "%";
+    progressBarValueElem.style.width = progress + "%";
 })
