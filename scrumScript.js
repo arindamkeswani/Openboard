@@ -260,7 +260,9 @@ summaryBtn.addEventListener("click", function () {
         )
     }
 
-
+    
+    localStorage.setItem("scrumLocalStorage", JSON.stringify(summaryObj));
+    
     console.log(summaryObj);
 })
 
