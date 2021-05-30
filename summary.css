@@ -70,7 +70,7 @@ body{
 
 
 
-.refresh-container{
+.button{
     /* margin-left:50%; */
     border:0;
     background: none;
@@ -90,7 +90,7 @@ body{
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.493);
 }
 
-.refresh-container:hover{
+.button:hover{
     background-color: whitesmoke;
     color:black;
 }
@@ -131,6 +131,7 @@ article{
     
 }
 .taskNo {
+    color: #fff;
     font-size: 10vw;
     font-weight: 600;
     padding: 10px 0;
