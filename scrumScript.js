@@ -205,7 +205,7 @@ function createNote() {
 }
 
 summaryBtn.addEventListener("click", function () {
-    document.onload = function () {
+    
 
         summaryObj = [];
         if (doneNotes == 0 && numNotes == 0) {
@@ -269,7 +269,7 @@ summaryBtn.addEventListener("click", function () {
 
 
 
-            // console.log(notesArr[i].childNodes[1].childNodes[11].style.backgroundColor);
+            console.log(notesArr[i].childNodes[1].childNodes[11].style.backgroundColor);
             
             let noteBG = notesArr[i].childNodes[1].childNodes[11].style.backgroundColor;
             if (noteBG == "black") {
@@ -309,7 +309,7 @@ summaryBtn.addEventListener("click", function () {
         console.log(summaryObj);
         localStorage.setItem("scrumLocalStorage", JSON.stringify(summaryObj));
 
-    }
+    
 })
 
 printScreenBtn.addEventListener("click", function () {
