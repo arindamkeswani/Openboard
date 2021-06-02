@@ -19,18 +19,21 @@
 
 .toggler{
     position: relative;
-    width:5%;
+    width:7%;
     padding-right:0vw;
+    margin-left: 3vw;
     /* border: 1px solid red; */
     display:flex;
     justify-content: center;
     align-items: center;
-    margin-left:10%;
+    margin-right:5%;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
     border-radius: 10px;
 }
+
+
 .toolbar{
-    width:80%;
+    width:88%;
     height:80%;
     display:flex;
     justify-content:space-between;
@@ -38,9 +41,21 @@
     /* border: 1px solid red; */
     /* z-index: 1; */
     /* overflow: hidden; */
+    margin-right: 3vw;
     padding-right: 3vw;
+    margin-left: 3vw;
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
     border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+.curr-selection{
+    /* margin-left: 1vw; */
+    height: auto;
+    width: 5%;
+    font-family: "Century Gothic", sans-serif;
+    /* box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24); */
+    /* border-radius: 10px; */
 }
 
 
@@ -52,16 +67,16 @@
 /* } */
 
 .fa-pencil-alt{
-    margin-left: 7vh;
+    padding-left: 3vh;
 }
 .pencil-options{
     /* background-color: lightgrey; */
     
     position:fixed;
-    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.479);
     margin-top: -1%;
-    margin-left: 28%;
-    
+    margin-left: 26%;
+    border-radius: 10px;
     opacity: 0;
     z-index:3;  
     
@@ -96,10 +111,10 @@ input#pen-size{
 
 .eraser-size{
     position:fixed;
-    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.479);
     margin-top: 0%;
-    margin-left: 32%;
-    
+    margin-left: 28%;
+    border-radius: 10px;
     opacity: 0;
     z-index:-1;  
 }

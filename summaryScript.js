@@ -20,11 +20,12 @@ refreshBtn.addEventListener("click", function () {
             let content = x[i].content;
             let priority = x[i].priority;
             let done = x[i].done;
+            let partition = x[i].partition;
             // console.log("Details ", id, content, priority, done);
 
 
             changeProgressBar(prog);
-            addTaskToList(id, content, priority, done);
+            addTaskToList(id, content, priority, done,partition);
         }
 
 
@@ -43,7 +44,7 @@ refreshBtn.addEventListener("click", function () {
             let content = x[i].content;
             let priority = x[i].priority;
             let done = x[i].done;
-            console.log("Details ", id, content, priority, done);
+            console.log("Details ", id, content, priority, done, partition);
 
 
 
@@ -59,7 +60,7 @@ function changeProgressBar(prog) {
     progressContainer.innerText = prog + "%";
 }
 
-function addTaskToList(id, content, priority, done) {
+function addTaskToList(id, content, priority, done, partition) {
 
     let taskContainer = document.createElement("article");
 
@@ -72,6 +73,8 @@ function addTaskToList(id, content, priority, done) {
                                     <p>${priority}</p>
                                     <div class="title">Finished</div>
                                     <p>${done}</p>
+                                    <div class="partition">Status</div>
+                                    <p>${partition}</p>
                                 </div>
     `;
 
@@ -173,6 +176,7 @@ function createSummary(x) {
     for (let i = 1; i < x.length; i++) {
         body += "Task ID: " + x[i].taskID + "\n";
         body += "Task: " + x[i].content + "\n";
+        body += "Status: " + x[i].partition + "\n";
         body += "Priority: " + x[i].priority + "\n";
         body += "Work finished: " + x[i].done + "\n";
         body += "_____" + "\n";

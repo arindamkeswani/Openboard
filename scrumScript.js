@@ -16,17 +16,17 @@ noteBtn.addEventListener("click", function () {
 numNotes = 0;
 
 doneNotes = 0;
-numNotes = 0;
+// numNotes = 0;
 let progress = 0;
 
-isToolbarHidden=false;
-togglerBtn.addEventListener("click",function(){
-    if(isToolbarHidden){
-        toolbar.style.display="flex";
-        isToolbarHidden=false;
-    }else{
-        toolbar.style.display="none";
-        isToolbarHidden=true;
+isToolbarHidden = false;
+togglerBtn.addEventListener("click", function () {
+    if (isToolbarHidden) {
+        toolbar.style.display = "flex";
+        isToolbarHidden = false;
+    } else {
+        toolbar.style.display = "none";
+        isToolbarHidden = true;
     }
 })
 
@@ -39,6 +39,7 @@ function createNote() {
                                         <div class="orange"></div>
                                         <div class="yellow"></div>
                                         <div class="blue"></div>
+                                        <div class="white"></div>
                                         <div class="check"><i class="fas fa-check"></i></div>
                                         <div class="minimize"><i class="fas fa-plus"></i></div>
                                         <div class="closeNote"><i class="fas fa-times"></i></div>
@@ -111,7 +112,7 @@ function createNote() {
 
     }
 
-    let checkBtn = noteNav.childNodes[9];
+    let checkBtn = noteNav.childNodes[11];
 
 
     checkBtn.addEventListener("click", function () {
@@ -141,8 +142,8 @@ function createNote() {
     checkBtn.click();
     checkBtn.click();
 
-    let mini = noteNav.childNodes[11];
-    let close = noteNav.childNodes[13];
+    let mini = noteNav.childNodes[13];
+    let close = noteNav.childNodes[15];
     let pad = taskContainer.childNodes[3];
     // console.log(document.querySelector(".sticky-note").childNodes);
 
@@ -154,7 +155,7 @@ function createNote() {
         }
 
     })
-    
+
     let noteId = taskContainer.childNodes[1].id
     close.addEventListener("click", function () {
         if (checkBtn.style.backgroundColor == "black") {//it is done
@@ -179,6 +180,7 @@ function createNote() {
     let orangeChange = noteNav.childNodes[3];
     let yellowChange = noteNav.childNodes[5];
     let blueChange = noteNav.childNodes[7];
+    let whiteChange = noteNav.childNodes[9];
 
     redChange.addEventListener("click", function () {
         pad.style.backgroundColor = "#A84040"; //rgb(168, 64, 64)
@@ -196,76 +198,118 @@ function createNote() {
         pad.style.backgroundColor = "#CCE1F2"; //rgb(204, 225, 242)
         noteNav.style.backgroundColor = "#CCE1F2";
     })
+    whiteChange.addEventListener("click", function () {
+        pad.style.backgroundColor = "#ffffff"; //rgb(204, 225, 242)
+        noteNav.style.backgroundColor = "#ffffff";
+    })
 }
 
 summaryBtn.addEventListener("click", function () {
-    summaryObj = [];
-    if (doneNotes == 0 && numNotes == 0) {
-        progress = 0;
-        progressBarValueElem.innerText = progress + "%";
-        progressBarValueElem.style.width = progress + "%";
-    } else {
-        progress = Math.round((doneNotes / numNotes) * 100);
-        progressBarValueElem.innerText = progress + "%";
-        progressBarValueElem.style.width = progress + "%";
-    }
+    document.onload = function () {
 
-
-    summaryObj.push(progress);
-
-    let notesArr = document.querySelectorAll(".sticky-note");
-    // console.log(notesArr[0].childNodes[1].style.backgroundColor);
-
-    for (let i = 0; i < notesArr.length; i++) {
-        // console.log(notesArr[0].childNodes[3].textContent);//gets text inside writing pad
-        // console.log(notesArr[0].childNodes[1].childNodes[9].style.backgroundColor); //gets checked background colour to check if done or not
-        // console.log(notesArr[0].childNodes[1].style.backgroundColor); //gives background colour of note, for priority
-        // let noteId=-1;
-        let done = "";
-        let priority = "";
-        let textVal = "";
-        
-        noteId = i;
-        
-        // id = 
-
-        textVal = notesArr[i].childNodes[3].innerText;
-        // console.log(notesArr[i].childNodes[1].childNodes[9]);
-        setTimeout(function(){ console.log(); }, 2000);
-        let noteBG = notesArr[i].childNodes[1].childNodes[9].style.backgroundColor;
-        if (noteBG == "black") {
-            done = "Yes";
+        summaryObj = [];
+        if (doneNotes == 0 && numNotes == 0) {
+            progress = 0;
+            progressBarValueElem.innerText = progress + "%";
+            progressBarValueElem.style.width = progress + "%";
         } else {
-            done = "No";
+            progress = Math.round((doneNotes / numNotes) * 100);
+            progressBarValueElem.innerText = progress + "%";
+            progressBarValueElem.style.width = progress + "%";
         }
 
-        let bgCol = notesArr[i].childNodes[1].style.backgroundColor;
-        if (bgCol == "rgb(168, 64, 64)") {
-            priority = "Very high";
-        } else if (bgCol == "rgb(246, 149, 82)") {
-            priority = "High";
-        } else if (bgCol == "rgb(238, 217, 113)") {
-            priority = "Average";
-        } else if (bgCol == "rgb(204, 225, 242)") {
-            priority = "Low";
-        } else {
-            priority = "Very Low";
-        }
 
-        //push everything into array
-        summaryObj.push(
-            {   taskID : noteId,
-                content: textVal,
-                priority: priority,
-                done: done
+        summaryObj.push(progress);
+
+        let notesArr = document.querySelectorAll(".sticky-note");
+        console.log(notesArr);
+
+        for (let i = 0; i < notesArr.length; i++) {
+
+
+
+
+            let position = notesArr[i].getBoundingClientRect().x + notesArr[i].getBoundingClientRect().width / 2;
+
+            let partition = "Backlog";
+
+            ratio = position / window.innerWidth;
+
+            console.log(ratio);
+            if (ratio <= 0.2) {
+                partition = "Backlog";
+            } else if (ratio <= 0.4) {
+                partition = "To-Do";
             }
-        )
-    }
+            else if (ratio <= 0.6) {
+                partition = "In progress";
+            }
+            else if (ratio <= 0.8) {
+                partition = "Done";
+            }
+            else {
+                partition = "Review";
+            }
 
-    console.log(summaryObj);
-    localStorage.setItem("scrumLocalStorage", JSON.stringify(summaryObj));
-    
-    
+            // console.log(document.getBoundingClientRect().x);
+            // console.log(notesArr[0].childNodes[3].textContent);//gets text inside writing pad
+            // console.log(notesArr[0].childNodes[1].childNodes[9].style.backgroundColor); //gets checked background colour to check if done or not
+            // console.log(notesArr[0].childNodes[1].style.backgroundColor); //gives background colour of note, for priority
+            // let noteId=-1;
+            let done = "";
+            let priority = "";
+            let textVal = "";
+
+            noteId = i;
+
+            // id = 
+
+            textVal = notesArr[i].childNodes[3].innerText;
+            // console.log(notesArr[i].childNodes[1].childNodes[9]);
+
+
+
+            // console.log(notesArr[i].childNodes[1].childNodes[11].style.backgroundColor);
+            
+            let noteBG = notesArr[i].childNodes[1].childNodes[11].style.backgroundColor;
+            if (noteBG == "black") {
+                done = "Yes";
+            } else {
+                done = "No";
+            }
+
+            
+
+
+            let bgCol = notesArr[i].childNodes[1].style.backgroundColor;
+            if (bgCol == "rgb(168, 64, 64)") {
+                priority = "Very high";
+            } else if (bgCol == "rgb(246, 149, 82)") {
+                priority = "High";
+            } else if (bgCol == "rgb(238, 217, 113)") {
+                priority = "Average";
+            } else if (bgCol == "rgb(204, 225, 242)") {
+                priority = "Low";
+            } else {
+                priority = "Very Low";
+            }
+
+            //push everything into array
+            summaryObj.push(
+                {
+                    taskID: noteId,
+                    content: textVal,
+                    priority: priority,
+                    done: done,
+                    partition: partition
+                }
+            )
+        }
+
+        console.log(summaryObj);
+        localStorage.setItem("scrumLocalStorage", JSON.stringify(summaryObj));
+
+    }
 })
 
 printScreenBtn.addEventListener("click", function () {
@@ -284,11 +328,13 @@ printScreenBtn.addEventListener("click", function () {
     });
 })
 
-clearScreenBtn.addEventListener("click", function(){
+clearScreenBtn.addEventListener("click", function () {
     let notesArr = document.querySelectorAll(".sticky-note");
-    
-    for(let i=0;i<notesArr.length;i++){
+
+    for (let i = 0; i < notesArr.length; i++) {
         notesArr[i].remove();
+        numNotes = 0;
+        doneNotes = 0;
     }
     summaryObj = [];
 

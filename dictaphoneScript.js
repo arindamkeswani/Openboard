@@ -26,14 +26,16 @@ recordBtn.addEventListener("click", function(){
         isRecordingOn = false;
         recordBtn.style.backgroundColor = "white";
         recordBtn.style.color = "black";
+        // recordBtn.style.border = "none";
         recognition.stop();
         console.log("Content:", spokenContent);
 
     }else{ //turn recording on
         // console.log("Recording on");
         isRecordingOn = true;
-        recordBtn.style.backgroundColor = "black";
-        recordBtn.style.color = "whitesmoke";
+        recordBtn.style.backgroundColor = "lightgrey";
+        recordBtn.style.color = "red";
+        // recordBtn.style.border = "2px solid grey";
         
         if(spokenContent.length){ //check if text is already present
             spokenContent="";

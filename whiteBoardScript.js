@@ -32,6 +32,9 @@ let clearBtn = document.querySelector("#clearscreen");
 let zoomInBtn = document.querySelector("#zoom-in");
 let zoomOutBtn = document.querySelector("#zoom-out");
 
+
+let currSelectionCont = document.querySelector(".curr-selection")
+
 board.height = window.innerHeight - toolbar.getBoundingClientRect().height - 60;
 board.width = window.innerWidth - 60;
 // board.height = window.innerHeight;
@@ -54,7 +57,9 @@ tool.lineCap = "round";
 let pencilOptActive = false; //check if pencil option is active or not
 let penColor = "black";
 let penSize = 5;
+
 pencilBtn.addEventListener("click", function () {
+    currSelectionCont.innerText = "Current tool: Pencil";
     console.log(tool.lineWidth);
     pencilOptActive = !pencilOptActive;
 
@@ -168,7 +173,8 @@ let eraserOptActive = false;
 let eraserColor = "white";
 let eraserSize = 5;
 eraserBtn.addEventListener("click", function () {
-    console.log(tool.lineWidth);
+    currSelectionCont.innerText = "Current tool: Eraser";
+    // console.log(tool.lineWidth);
 
     pencilOptActive = false;
     pencilOpt.style.opacity = "0";
@@ -238,6 +244,7 @@ eraserMeter.addEventListener("click", function () {
 
 //sticky notes
 noteBtn.addEventListener("click", function () {
+    currSelectionCont.innerText = "Current tool: Sticky notes";
     createNote();
 })
 function createNote() {
@@ -298,6 +305,7 @@ function createNote() {
 //undo
 
 undoBtn.addEventListener("mousedown", function (e) {
+    currSelectionCont.innerText = "Current tool: Undo";
     // console.log(e.type);
 
     // console.log("Clicked Undo", undo_array.length);
@@ -320,6 +328,7 @@ function undo() {
 
 
 redoBtn.addEventListener("mousedown", function () {
+    currSelectionCont.innerText = "Current tool: Redo";
     console.log("Clicked redo");
     redo();
 })
@@ -361,6 +370,7 @@ function redraw_canvas() {
 
 let imgCount = 0;
 uploadBtn.addEventListener("change", function () {
+    currSelectionCont.innerText = "Current tool: Upload picture";
     if (this.files && this.files[0]) {
         // console.log("Clicked upload button");
         // console.log(uploadBtn.value);
@@ -429,6 +439,7 @@ uploadBtn.addEventListener("change", function () {
 })
 
 downloadBtn.addEventListener("click", function () {
+    currSelectionCont.innerText = "Current tool: Download drawing";
     console.log("Download area");
     let canvas = document.querySelector("#board");
     // canvas.width = board.width;
@@ -445,6 +456,7 @@ downloadBtn.addEventListener("click", function () {
 })
 
 screenshotBtn.addEventListener("click", function(){
+    currSelectionCont.innerText = "Current tool: Screenshot";
     const screenshotTarget = document.querySelector(".full-board");
 
     html2canvas(screenshotTarget).then((canvas) => {
@@ -462,6 +474,7 @@ screenshotBtn.addEventListener("click", function(){
 //Zoom in/out
 let zoomLevel = 1; //degree of zoom
 zoomInBtn.addEventListener("click",function(e){
+    currSelectionCont.innerText = "Current tool: Zoom-in";
     zoomLevel += 0.1;
     if(zoomLevel<3){
         zoomLevel*=1.1;
@@ -474,6 +487,7 @@ zoomInBtn.addEventListener("click",function(e){
     redraw_canvas();
 })
 zoomOutBtn.addEventListener("click",function(){
+    currSelectionCont.innerText = "Current tool: Zoom-out";
     // zoomLevel -= 0.1;
     if(zoomLevel>0.5){
         zoomLevel*=0.90;
@@ -486,6 +500,7 @@ zoomOutBtn.addEventListener("click",function(){
     redraw_canvas();
 })
 clearBtn.addEventListener("click",function(){
+    currSelectionCont.innerText = "Current tool: Clear whiteboard";
     tool.clearRect(0, 0, board.width, board.height);
     undo_array=[];
     redo_array=[];
