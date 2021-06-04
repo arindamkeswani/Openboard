@@ -130,5 +130,66 @@ function initButtons() {
   document.getElementById('closeButton').addEventListener('click', closeModal);
 }
 
+document.getElementById('txt').addEventListener("click",function(){
+  var x = JSON.parse(localStorage.getItem("events"));
+    let { body, dateString, formattedTime } = createSummary(x);
+
+    const textToBLOB = new Blob([body], { type: 'text/plain' });
+    const sFileName = `Events Summary ${dateString} ${formattedTime}.txt`;	   // The file to save the data.
+
+    let newLink = document.createElement("a");
+    newLink.download = sFileName;
+
+    if (window.webkitURL != null) {
+        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+    }
+    else {
+        newLink.href = window.URL.createObjectURL(textToBLOB);
+        newLink.style.display = "none";
+        document.body.appendChild(newLink);
+    }
+
+    newLink.click();
+    newLink.remove();
+})
+
+function createSummary(x) {
+  const currentDate = new Date();
+
+  const currentDayOfMonth = currentDate.getDate();
+  const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+  const currentYear = currentDate.getFullYear();
+
+  const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+
+  var hours = currentDate.getHours();
+  // Minutes part from the timestamp
+  var minutes = "0" + currentDate.getMinutes();
+  // Seconds part from the timestamp
+  var seconds = "0" + currentDate.getSeconds();
+
+  // Will display time in 10:30:23 format
+  var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+  // console.log(formattedTime);
+  // const currentDate = new Date();
+  // const timestamp = currentDate.getTime(); //full time stamp
+
+  let body = "Events list downloaded on:\n\nDate: " + dateString + "\n\nTime: " + formattedTime + "\n\n";
+
+
+  body += "DATE(MM/DD/YYYY)|\tEVENT\n";
+
+  for (let i = 0; i < x.length; i++) {
+      body += x[i].date + "\t|\t";
+      body += x[i].title + "\n";
+      
+      // body += "_____" + "\n";
+  }
+
+  return { body, dateString, formattedTime };
+}
+
+
 initButtons();
 load();
