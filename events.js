@@ -1,4 +1,4 @@
-let nav = 0; //to navigate through months. Default January
+let nav = 0; //to navigate through months. Default Current month
 let clicked = null; //to set value of a date to clicked
 let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : []; //if events exist in local storage, return them, else ereturn empty array
 
@@ -9,10 +9,10 @@ const backDrop = document.getElementById('modalBackDrop');
 const eventTitleInput = document.getElementById('eventTitleInput');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-function openModal(date) {
+function openModal(date) { //input user selected date
   clicked = date;
 
-  const eventForDay = events.find(e => e.date === clicked);
+  const eventForDay = events.find(e => e.date === clicked); //check if an event already exists on a date
 
   if (eventForDay) {
     document.getElementById('eventText').innerText = eventForDay.title;
@@ -28,7 +28,7 @@ function load() {
   const dt = new Date(); //date object
 
   if (nav !== 0) {
-    dt.setMonth(new Date().getMonth() + nav);
+    dt.setMonth(new Date().getMonth() + nav); //set the month to the navigates value
   }
 
   const day = dt.getDate();
@@ -47,9 +47,9 @@ function load() {
   const paddingDays = weekdays.indexOf(dateString.split(', ')[0]); //this gets first day of the month for padding purposes. Padding days=Number of extra days from previous month which need to be accounted for during rendering
 
   document.getElementById('monthDisplay').innerText = 
-    `${dt.toLocaleDateString('en-us', { month: 'long' })} ${year}`;
+    `${dt.toLocaleDateString('en-GB', { month: 'long' })} ${year}`; //to display selected month and year
 
-  calendar.innerHTML = '';
+  calendar.innerHTML = ''; //clearing the current rendered month to make space for navigated month
 
   for(let i = 1; i <= paddingDays + daysInMonth; i++) {
     const daySquare = document.createElement('div');
@@ -57,11 +57,11 @@ function load() {
 
     const dayString = `${month + 1}/${i - paddingDays}/${year}`;
 
-    if (i > paddingDays) {
-      daySquare.innerText = i - paddingDays;
-      const eventForDay = events.find(e => e.date === dayString);
+    if (i > paddingDays) { //render a normal date square
+      daySquare.innerText = i - paddingDays; //add actual date 
+      const eventForDay = events.find(e => e.date === dayString);  //check if there is an event on the date in dayString
 
-      if (i - paddingDays === day && nav === 0) {
+      if (i - paddingDays === day && nav === 0) {  //highlight current day
         daySquare.id = 'currentDay';
       }
 
@@ -73,11 +73,11 @@ function load() {
       }
 
       daySquare.addEventListener('click', () => openModal(dayString));
-    } else {
+    } else { //render padding day
       daySquare.classList.add('padding');
     }
 
-    calendar.appendChild(daySquare);    
+    calendar.appendChild(daySquare);  //add day to calendar rendering  
   }
 }
 
