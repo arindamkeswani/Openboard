@@ -269,9 +269,9 @@ summaryBtn.addEventListener("click", function () {
 
 
 
-            console.log(notesArr[i].childNodes[1].childNodes[11].style.backgroundColor);
+            console.log(notesArr[i].childNodes[1].children);
             
-            let noteBG = notesArr[i].childNodes[1].childNodes[11].style.backgroundColor;
+            let noteBG = notesArr[i].childNodes[1].children[5].style.backgroundColor;
             if (noteBG == "black") {
                 done = "Yes";
             } else {
@@ -321,7 +321,7 @@ printScreenBtn.addEventListener("click", function () {
         const base64image = canvas.toDataURL("image/png");
         let anchor = document.createElement("a");
         anchor.href = base64image;
-        anchor.download = "file.png";
+        anchor.download = "Scrumboard.png";
         anchor.click();
         anchor.remove();
         // window.location.href = base64image;
