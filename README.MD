@@ -73,7 +73,7 @@
 ```
 ```
 5. EVENTS
-    5.1 Calender display 
+    5.1 Calendar display 
         5.1.1 Display days as blocks, showing respective weekdays
         5.1.2 Display Month and Year 
         5.1.3 Traverse through calendar
